@@ -1,0 +1,14 @@
+{
+    "name": "Smart Google",
+    "version": "1.0",
+    "description": "Voice interactions with your chrome browser",
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+    "permissions": ["declarativeContent"],
+    "manifest_version": 2
+}
