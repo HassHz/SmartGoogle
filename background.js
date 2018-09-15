@@ -2,7 +2,7 @@ chrome.runtime.onInstalled.addListener(function() {
     console.log("Extension Loaded");
 });
 
-// Communication with background page
+// Communication with popup page
 chrome.extension.onConnect.addListener(function(port) {
     console.log("Connected to popup");
     port.onMessage.addListener(function(msg) {
