@@ -77,9 +77,10 @@ if (!("webkitSpeechRecognition" in window)) {
 		// Google search
 		if(action == "search" && searchText != ""){
 			window.open("https://www.google.com/search?q=" + searchText);
-		// Open (in new tab) using I'm feeling lucky
+		// Open website in new tab using I'm feeling lucky
 		} else if (action == "open" && searchText != "") {
 			window.open("https://www.google.com/search?btnI=1&q=" + searchText);
+		// Go to website in current tab using I'm feeling lucky
 		} else if (action == "go to" && searchText != "") {
 			chrome.tabs.update({
 				url: "https://www.google.com/search?btnI=1&q=" + searchText
