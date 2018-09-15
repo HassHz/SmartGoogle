@@ -54,17 +54,11 @@ if (!("webkitSpeechRecognition" in window)) {
 		}
 		console.log("Recorded text: " + textRecorded);
 
-		speechText = textRecorded.split(" ");
-		if(speechText.length > 0){
+		if(textRecorded.length > 0){
 			for(var i = 0; i < commands.length; i++){
-				if(commands[i] == speechText[0].toLowerCase()){
+                if (textRecorded.startsWith(commands[i])) {
 					action = commands[i];
-					searchText = speechText.slice(1, speechText.length).join("+");
-					recognition.stop();
-					break;
-				} else if (textRecorded.startsWith(commands[i])) {
-					action = commands[i];
-					searchText = speechText.slice(2, speechText.length).join("+");
+                    searchText = textRecorded.substr(commands[i].length + 1).split(" ").join("+");
 					recognition.stop();
 					break;
 				}
