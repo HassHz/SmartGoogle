@@ -74,7 +74,7 @@ if (!("webkitSpeechRecognition" in window)) {
 		console.log(searchText);
 
 		if (action != "" && searchText != ""){
-			redirectPage(action, searchText)
+			redirectPage(action, searchText);
 		}
 
 		recognition.stop();
@@ -115,7 +115,7 @@ function redirectPage(command, keyword) {
 		} else if (command == goto_command) {
 			chrome.tabs.update({
 				url: "https://www.google.com/search?btnI=1&q=" + keyword
-			})
+			});
 		} else {
 			console.log("Unspecified action: " + command);
 		}
