@@ -15,10 +15,15 @@ chrome.extension.onConnect.addListener(function(port) {
 
 var speechText;
 var action;
+
+const search_command = "search";
+const open_command = "open";
+const goto_command = "go to";
+
 var commands = [
-	"search", 			// Search on google
-	"open",				// Open a website (using Google's "I'm Feeling Lucky") in a new tab
-	"go to"				// Navigate to a different website on the same tab (using Google's "I'm Feeling Lucky")
+	search_command, 			// Search on google
+	open_command,				// Open a website (using Google's "I'm Feeling Lucky") in a new tab
+	goto_command				// Navigate to a different website on the same tab (using Google's "I'm Feeling Lucky")
 ];
 
 if (!("webkitSpeechRecognition" in window)) {
@@ -68,19 +73,8 @@ if (!("webkitSpeechRecognition" in window)) {
 		console.log("Action: " + action + "\nAction text: " + searchText);
 		console.log(searchText);
 
-		// Google search
-		if(action == "search" && searchText != ""){
-			window.open("https://www.google.com/search?q=" + searchText);
-		// Open website in new tab using I'm feeling lucky
-		} else if (action == "open" && searchText != "") {
-			window.open("https://www.google.com/search?btnI=1&q=" + searchText);
-		// Go to website in current tab using I'm feeling lucky
-		} else if (action == "go to" && searchText != "") {
-			chrome.tabs.update({
-				url: "https://www.google.com/search?btnI=1&q=" + searchText
-			})
-		} else if (action != ""){
-			console.log("Unspecified action: " + action);
+		if (action != "" && searchText != ""){
+			redirectPage(action, searchText)
 		}
 
 		recognition.stop();
@@ -106,5 +100,24 @@ function record() {
 		console.log("Recording started...");
 		recognition.start();
 		recognizing = true;
+	}
+}
+
+function redirectPage(command, keyword) {
+	if(command != "" && keyword !=""){
+		// Google search
+		if(command == search_command){
+			window.open("https://www.google.com/search?q=" + keyword);
+		// Open website in new tab using I'm feeling lucky
+		} else if (command == open_command) {
+			window.open("https://www.google.com/search?btnI=1&q=" + keyword);
+		// Go to website in current tab using I'm feeling lucky
+		} else if (command == goto_command) {
+			chrome.tabs.update({
+				url: "https://www.google.com/search?btnI=1&q=" + keyword
+			})
+		} else {
+			console.log("Unspecified action: " + command);
+		}
 	}
 }
